@@ -29,15 +29,20 @@
 
     class RegistroOrdini
     {
+        private List<string> ordini = new List<string>();
         private static RegistroOrdini instance;
         private RegistroOrdini() { }
-        public static RegistroOrdini GetInstance()
+        public static RegistroOrdini Instance
         {
-            if (instance == null)
+            get
             {
+                if (instance == null)
+                {
                 instance = new RegistroOrdini();
+                 }
+             return instance;
             }
-            return instance;
+            
         }
         public void RegistraOrdine(string DescrizioneBevanda)
         {
@@ -46,6 +51,14 @@
         public void AggiungiOrdine(string DescrizioneBevanda)
         {
             Console.WriteLine($"Ordine aggiunto al registro: {DescrizioneBevanda}");
+        }
+        public void MostraOrdini()
+        {
+            Console.WriteLine("Ordini Registrati");
+            foreach (var ordine in ordini)
+            {
+                Console.WriteLine(ordine);
+            }
         }
     }
     internal class Program
