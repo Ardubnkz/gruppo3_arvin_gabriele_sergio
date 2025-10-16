@@ -1,71 +1,66 @@
-﻿namespace esercizio_group3
+using System;
+using System.Collections.Generic;   
+
+namespace esercizio_group3
 {
-    #region INTERFACE
-    interface IPrepataionStrategy
+    public interface IObserver
     {
-        void Prepare(string nomeBevanda);
+        void Update();
     }
-    interface IBevanda
-    {
-        string Getdescrizione();
-        double Getcosto();
-    }
-    interface IObserver
-    {
-        void Notifica(string message);
-    }
-    interface Isoggeto
-    {
-        void registra(IObserver o);
-        void rimuovi(IObserver o);
-        void notificaTutti(string message);
 
-    }
-    interface ICliente
+    public interface IObservable
     {
-        void OrdinaPronto(string DescrizioneBevanda);
+        void AggiungiCliente(IObserver observer);
+        void RimuoviCliente(IObserver observer);
+        void NotificaClienti();
     }
-    #endregion
 
-    class RegistroOrdini
+    public class Cliente : IObserver
     {
-        private List<string> ordini = new List<string>();
-        private static RegistroOrdini instance;
-        private RegistroOrdini() { }
-        public static RegistroOrdini Instance
+        public string Nome { get; }
+        public Cliente(string nome)
         {
-            get
-            {
-                if (instance == null)
-                {
-                instance = new RegistroOrdini();
-                 }
-             return instance;
-            }
-            
+            Nome = nome;
         }
-        public void RegistraOrdine(string DescrizioneBevanda)
+        public void Update()
         {
-            Console.WriteLine($"Ordine registrato: {DescrizioneBevanda}");
-        }
-        public void AggiungiOrdine(string DescrizioneBevanda)
-        {
-            Console.WriteLine($"Ordine aggiunto al registro: {DescrizioneBevanda}");
-        }
-        public void MostraOrdini()
-        {
-            Console.WriteLine("Ordini Registrati");
-            foreach (var ordine in ordini)
-            {
-                Console.WriteLine(ordine);
-            }
+            Console.WriteLine($"Benvenuto {Nome}, al Pub C#");
         }
     }
-    internal class Program
+    public class Pub : IObservable
+{
+    private readonly List<IObserver> _clienti = new List<IObserver>();
+
+    public void AggiungiCliente(IObserver observer)
+    {
+        _clienti.Add(observer);
+    }
+
+    public void RimuoviCliente(IObserver observer)
+    {
+        _clienti.Remove(observer);
+    }
+
+    public void NotificaClienti()
+    {
+        foreach (var cliente in _clienti)
+            cliente.Update();
+    }
+}
+
+
+    public static class Program
     {
         static void Main(string[] args)
         {
-            
+            Pub pub = new Pub();
+            Cliente cliente1 = new Cliente("Gabriele");
+            Cliente cliente2 = new Cliente("Arvin");
+            Cliente cliente3 = new Cliente("Sergio");
+            pub.AggiungiCliente(cliente1);
+            pub.AggiungiCliente(cliente2);
+            pub.AggiungiCliente(cliente3);
+            pub.NotificaClienti();
         }
     }
 }
