@@ -1,6 +1,6 @@
 ﻿namespace esercizio_group3
 {
-    #region
+    #region INTERFACE
     interface IPrepataionStrategy
     {
         void Prepare(string nomeBevanda);
@@ -26,6 +26,28 @@
         void OrdinaPronto(string DescrizioneBevanda);
     }
     #endregion
+
+    class RegistroOrdini
+    {
+        private static RegistroOrdini instance;
+        private RegistroOrdini() { }
+        public static RegistroOrdini GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new RegistroOrdini();
+            }
+            return instance;
+        }
+        public void RegistraOrdine(string DescrizioneBevanda)
+        {
+            Console.WriteLine($"Ordine registrato: {DescrizioneBevanda}");
+        }
+        public void AggiungiOrdine(string DescrizioneBevanda)
+        {
+            Console.WriteLine($"Ordine aggiunto al registro: {DescrizioneBevanda}");
+        }
+    }
     internal class Program
     {
         static void Main(string[] args)
