@@ -1,4 +1,5 @@
-﻿using System;
+﻿using esercizio_group3.Preparation_Strategy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,40 @@ namespace esercizio_group3
 			}
 			return instance;
 		}
-		public void RegistraOrdine(string DescrizioneBevanda)
+
+		private HashSet<Order> orders = new HashSet<Order>();
+
+		public void AggiungiOrdine(Order order)
 		{
-			Console.WriteLine($"Ordine registrato: {DescrizioneBevanda}");
+			orders.Add(order);
+			Console.WriteLine($"Ordine aggiunto al registro: {order.Drink.Descrizione()}");
 		}
-		public void AggiungiOrdine(string DescrizioneBevanda)
+
+		public void PrintOrdersByClient(Cliente client)
 		{
-			Console.WriteLine($"Ordine aggiunto al registro: {DescrizioneBevanda}");
+			Console.WriteLine($"Ordini del cliente {client.Nome}:");
+			foreach (Order order in orders)
+			{
+				if(order.Client == client)
+				{
+					Console.WriteLine($"{order.Drink.Descrizione()}: {order.Drink.Costo()}");
+				}
+			}
+
+		}
+	}
+
+	public class Order
+	{
+		public Cliente Client { get; private set; }
+		public IBevanda Drink { get; private set; }
+		public PreparationType Preparation { get; private set; }
+
+		public Order(Cliente client, IBevanda drink, PreparationType preparation)
+		{
+			Client = client;
+			Drink = drink;
+			Preparation = preparation;
 		}
 	}
 }
