@@ -1,10 +1,11 @@
 ﻿namespace esercizio_group3
 {
-    interface IprepataionStrategy
+    #region
+    interface IPrepataionStrategy
     {
         void Prepare(string nomeBevanda);
     }
-    interface Ibevanda
+    interface IBevanda
     {
         string Getdescrizione();
         double Getcosto();
@@ -24,6 +25,7 @@
     {
         void OrdinaPronto(string DescrizioneBevanda);
     }
+    #endregion
     internal class Program
     {
         static void Main(string[] args)
