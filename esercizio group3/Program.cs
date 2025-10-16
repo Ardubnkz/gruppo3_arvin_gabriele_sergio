@@ -31,20 +31,20 @@ namespace esercizio_group3
 {
     private readonly List<IObserver> _clienti = new List<IObserver>();
 
-    public void Attach(IObserver observer)
+    public void AggiungiCliente(IObserver observer)
     {
         _clienti.Add(observer);
     }
 
-    public void Detach(IObserver observer)
+    public void RimuoviCliente(IObserver observer)
     {
         _clienti.Remove(observer);
     }
 
-    public void Notify(string message)
+    public void NotificaClienti()
     {
         foreach (var cliente in _clienti)
-            cliente.Update(message);
+            cliente.Update();
     }
 }
 
