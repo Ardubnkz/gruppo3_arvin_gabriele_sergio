@@ -8,8 +8,9 @@ namespace esercizio_group3
 		public string Descrizione();
 		public double Costo();
 	}
-
-	class Mojito : IBevanda
+	
+  
+    class Mojito : IBevanda
 	{
 		public string Descrizione() { return "Mojito"; }
 		public double Costo() { return 8.00; }
@@ -133,23 +134,89 @@ namespace esercizio_group3
 		}
 	}
 
-	#endregion
+    #endregion
 
 
+    class Barman
+    {
+        public void PreparaBevanda(Pub pub)
+        {
+            Console.WriteLine("Scegli la bevanda:");
+            Console.WriteLine("1. Mojito");
+            Console.WriteLine("2. Spritz");
+            Console.WriteLine("3. Negroni");
+            Console.WriteLine("4. Martini");
+            Console.WriteLine("5. CocaCola");
+            string sceltaBevanda = Console.ReadLine().Trim();
+            string tipo = sceltaBevanda switch
+            {
+                "1" => "mojito",
+                "2" => "spritz",
+                "3" => "negroni",
+                "4" => "martini",
+                "5" => "cocacola",
+                _ => null
+            };
+
+            IBevanda bevanda = BevandaFactory.Crea(tipo);
+            if (bevanda == null)
+            {
+                Console.WriteLine("Tipo di bevanda non riconosciuto.");
+                return;
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Vuoi aggiungere una decorazione? (s/n)");
+                string risposta = Console.ReadLine()?.Trim().ToLower();
+                if (risposta != "s") break;
+
+                Console.WriteLine("Scegli una decorazione:");
+                Console.WriteLine("1. Zest di Lime");
+                Console.WriteLine("2. Zest di Limone");
+                Console.WriteLine("3. Zest d'Arancia");
+                Console.WriteLine("4. Fragola");
+                Console.WriteLine("5. Ananas");
+                Console.WriteLine("6. Cocco");
+                Console.WriteLine("7. Limone Essiccato");
+                Console.WriteLine("8. Arancia Essiccata");
+                string scelta = Console.ReadLine()?.Trim();
+
+                switch (scelta)
+                {
+                    case "1": bevanda = new ZestLime(bevanda); break;
+                    case "2": bevanda = new ZestLimone(bevanda); break;
+                    case "3": bevanda = new ZestArancia(bevanda); break;
+                    case "4": bevanda = new Fragola(bevanda); break;
+                    case "5": bevanda = new Ananas(bevanda); break;
+                    case "6": bevanda = new Cocco(bevanda); break;
+                    case "7": bevanda = new LimoneEssiccato(bevanda); break;
+                    case "8": bevanda = new AranciaEssiccata(bevanda); break;
+                    default: Console.WriteLine("Scelta non valida."); break;
+                }
+            }
 
 
+            RegistroOrdini.GetInstance().RegistraOrdine(bevanda.Descrizione());
 
+            pub.NotificaClienti();
 
-
-
-
-
-
-
-
-
-
-
-
-
+            Console.WriteLine($"Bevanda preparata: {bevanda.Descrizione()} - Prezzo: {bevanda.Costo():0.00}€");
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
