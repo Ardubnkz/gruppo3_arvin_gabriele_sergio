@@ -11,12 +11,23 @@ namespace esercizio_group3
     {
         void Update();
     }
+    public interface IBevanda
+    {
+        string GetDescrizione();
+        double GetCosto();
+    }
 
     public interface IObservable
     {
         void AggiungiCliente(IObserver observer);
         void RimuoviCliente(IObserver observer);
         void NotificaClienti();
+    }
+    public interface ISoggetto
+    {
+        void AggiungiOsservatore(IObserver o);
+        void RimuoviOsservatore(IObserver o);
+        void NotificaOsservatori(string messaggio);
     }
 
     public class Cliente : IObserver
