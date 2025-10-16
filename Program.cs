@@ -61,6 +61,8 @@ namespace esercizio_group3
             pub.AggiungiCliente(cliente2);
             pub.AggiungiCliente(cliente3);
             pub.NotificaClienti();
+            Barman barman = new Barman();
+            barman.PreparaBevanda(pub);
         }
     }
 }
