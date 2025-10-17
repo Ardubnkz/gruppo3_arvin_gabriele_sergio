@@ -139,7 +139,7 @@ namespace esercizio_group3
 
     class Barman
     {
-        public void PreparaBevanda(Pub pub)
+        public IBevanda PreparaBevanda()
         {
             Console.WriteLine("Scegli la bevanda:");
             Console.WriteLine("1. Mojito");
@@ -162,7 +162,7 @@ namespace esercizio_group3
             if (bevanda == null)
             {
                 Console.WriteLine("Tipo di bevanda non riconosciuto.");
-                return;
+                return null;
             }
 
             while (true)
@@ -196,12 +196,11 @@ namespace esercizio_group3
                 }
             }
 
+			Console.WriteLine($"Bevanda preparata: {bevanda.Descrizione()} - Prezzo: {bevanda.Costo():0.00}€");
+			return bevanda;
+            // RegistroOrdini.Instance.AggiungiOrdine(new Order(cliente, bevanda, Preparation_Strategy.PreparationType.None));
 
-            RegistroOrdini.GetInstance().RegistraOrdine(bevanda.Descrizione());
-
-            pub.NotificaClienti();
-
-            Console.WriteLine($"Bevanda preparata: {bevanda.Descrizione()} - Prezzo: {bevanda.Costo():0.00}€");
+            
         }
     }
 }

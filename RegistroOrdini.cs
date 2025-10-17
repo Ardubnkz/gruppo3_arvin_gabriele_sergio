@@ -11,13 +11,17 @@ namespace esercizio_group3
 	{
 		private static RegistroOrdini instance;
 		private RegistroOrdini() { }
-		public static RegistroOrdini GetInstance()
+		public static RegistroOrdini Instance
 		{
-			if (instance == null)
+			get
 			{
-				instance = new RegistroOrdini();
+				if (instance == null)
+				{
+					instance = new RegistroOrdini();
+				}
+				return instance;
 			}
-			return instance;
+
 		}
 
 		private HashSet<Order> orders = new HashSet<Order>();
@@ -33,12 +37,20 @@ namespace esercizio_group3
 			Console.WriteLine($"Ordini del cliente {client.Nome}:");
 			foreach (Order order in orders)
 			{
-				if(order.Client == client)
+				if (order.Client == client)
 				{
 					Console.WriteLine($"{order.Drink.Descrizione()}: {order.Drink.Costo()}");
 				}
 			}
 
+		}
+
+		public void PrintAllOrders()
+		{
+			foreach(Order order in orders)
+			{
+				Console.WriteLine($"{order.Client.Nome} ha ordinato {order.Drink.Descrizione()}: {order.Drink.Costo()}");
+			}
 		}
 	}
 
