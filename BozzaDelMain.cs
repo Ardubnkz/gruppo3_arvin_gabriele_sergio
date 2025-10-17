@@ -81,7 +81,7 @@ class Programma
 		{ 
 			foreach(Cliente client in clients)
 			{
-				if(client.Nome == scelta)
+				if(client.Nome.ToLower() == scelta.ToLower())
 				{
 					return client;
 				}
